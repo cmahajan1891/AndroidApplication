@@ -1,2 +1,2 @@
-# AndroidApplication
+# Android Application
 Android project
