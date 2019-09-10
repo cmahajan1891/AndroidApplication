@@ -1,13 +1,8 @@
 package com.example.androidapplication.activities
 
-import android.os.Bundle
-import android.os.PersistableBundle
-import android.support.v7.app.AppCompatActivity
 import com.example.androidapplication.R
 
-class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
-        setContentView(R.layout.activity_main)
-    }
+class MainActivity : BaseActivity() {
+    override fun getLayout(): Int = R.layout.activity_main
+    override val tag: String = "MainActivity"
 }
