@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+
 import com.example.androidapplication.R;
 
 public class TracerActivity extends AppCompatActivity {
@@ -82,18 +83,26 @@ public class TracerActivity extends AppCompatActivity {
     }
 
     private void createChannel() {
-        NotificationManager mNotificationManager = getSystemService(NotificationManager.class);
+        NotificationManager mNotificationManager = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            mNotificationManager = getSystemService(NotificationManager.class);
+        }
         // The id of the channel.
-        String id = TRACER;
         // The user-visible name of the channel.
         CharSequence name = "Activity livecycle tracer";
         // The user-visible description of the channel.
         String description = "Allows to trace the activity lifecycle";
-        int importance = NotificationManager.IMPORTANCE_HIGH;
-        NotificationChannel mChannel = new NotificationChannel(id, name, importance);
-        // Configure the notification channel.
-        mChannel.setDescription(description);
+        int importance = 0;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            importance = NotificationManager.IMPORTANCE_HIGH;
+        }
+        NotificationChannel mChannel = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            mChannel = new NotificationChannel(TRACER, name, importance);
+            // Configure the notification channel.
+            mChannel.setDescription(description);
+            mNotificationManager.createNotificationChannel(mChannel);
+        }
 
-        mNotificationManager.createNotificationChannel(mChannel);
     }
 }
